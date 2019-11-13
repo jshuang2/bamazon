@@ -64,21 +64,31 @@ function runInquirer() {
         ])
         .then(function(answer) {
             var newItemQuantity;
+            var cost;
             for (var i = 0; i < res.length; i++) {
                 if (res[i].item_id === parseFloat(answer.itemID) && res[i].stock_quantity >= parseFloat(answer.howManyUnits)) {
                    newItemQuantity = res[i].stock_quantity - answer.howManyUnits;
+                   cost = answer.howManyUnits * res[i].price;
+
+                   db.query("UPDATE products SET ? WHERE ?", [{stock_quantity: newItemQuantity}, {item_id: answer.itemID}], function(err) {
+                       if (err) throw err;
+                       console.log("------------------------------------------------");
+                       console.log("Purchase successful! You've bought " + answer.howManyUnits + " unit(s). \nThe total cost was: $" + cost + ".");
+                       console.log("------------------------------------------------");
+                       runInquirer();
+                   })
+                }
+                else if (res[i].item_id === parseFloat(answer.itemID) && res[i].stock_quantity < parseFloat(answer.howManyUnits)) {
+                    console.log("------------------------------------------------");
+                    console.log("Insufficient quantity!");
+                    console.log("------------------------------------------------");
+                    runInquirer();
                 }
             }
-            console.log(newItemQuantity);
-        //     if (newItemQuantity >= parseFloat(answer.itemID) {
-        //         newItemQuantity 
-        //     })
-        // })
-        })
+            
+        });
+
     })
 };
 
 
-// function updateBamazon() {
-//     var query = "UPDATE products SET stock_quantity = ?"
-// }
