@@ -21,13 +21,12 @@ db.connect(function (err) {
 function runBamazon() {
     var query = "SELECT item_id, product_name, price FROM products";
     db.query(query, function (err, res) {
-        console.log("==================================" + "\n");
+        console.log("==================================\n");
         console.log("ITEMS FOR SALE");
         for (var i = 0; i < res.length; i++) {
             console.log("----------------------------------");
             console.log(
-                "Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nPrice: $" + res[i].price
-            );
+                "Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nPrice: $" + res[i].price);
         }
         console.log("\n" + "==================================");
         runInquirer();
