@@ -38,7 +38,7 @@ function menu () {
                 viewProducts();
                 break;
             case "View Low Inventory":
-                viewInventory();
+                viewLowInventory();
                 break;
             case "Add to Inventory":
                 addInventory();
@@ -66,3 +66,72 @@ function viewProducts() {
     })
 };
 
+function viewLowInventory() {
+    var query = "SELECT * FROM products WHERE stock_quantity < 5";
+    db.query(query, function(err, res) {
+        console.log("\n");
+        console.log("LOW INVENTORY");
+        for (var i = 0; i < res.length; i++) {
+            console.log("----------------------------------");
+            console.log("Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nDepartment: " + res[i].department_name + "\nPrice: $" + res[i].price + "\nStock quantity: " + res[i].stock_quantity);
+        }
+        console.log("\n==================================");
+    })
+};
+
+function addInventory() {
+    var query = "SELECT * FROM products";
+    db.query(query, function(err, res) {
+        console.log("\n");
+        console.log("ALL PRODUCTS");
+        for (var i = 0; i < res.length; i++) {
+            console.log("----------------------------------");
+            console.log("Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nDepartment: " + res[i].department_name + "\nPrice: $" + res[i].price + "\nStock quantity: " + res[i].stock_quantity);
+        }
+        console.log("\n==================================");
+    
+
+        inquirer
+        .prompt([{
+            name: "selectProduct",
+            type: "input",
+            message: "What's the ID of the item you would like to add inventory to?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+            }
+            },
+            {
+            name: "addHowMany",
+            type: "input",
+            message: "How many units would you like to add?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+                }
+            }
+        ])
+        .then(function(answer) {
+            var newQuantity;
+            var chosenItem;
+            for (var i = 0; i < res.length; i++) {
+                if (res[i].item_id === parseFloat(answer.selectProduct)) {
+                    newQuantity = res[i].stock_quantity + parseFloat(answer.addHowMany);
+                    chosenItem = res[i].product_name;
+
+                    db.query("UPDATE products SET ? WHERE ?", [{stock_quantity: newQuantity}, {item_id: answer.selectProduct}], function(err) {
+                        if (err) throw err;
+                        console.log("------------------------------------------------");
+                        console.log("Inventory successfully added! \nThe total available quantity of " + chosenItem + " is now " + newQuantity + " units.");
+                        ("------------------------------------------------");
+                    })
+                }
+            }
+        })
+    
+    });
+}
