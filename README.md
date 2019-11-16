@@ -7,16 +7,13 @@ This is a Node.js and MySQL app that simulates basic functionality of an online 
 
 2. **Manager View** - Managers can access the manager interface by typing the command `node bamazonManager.js` into the CLI. Running this application will list a set of menu options:
     * View Products for Sale
+        * The app will list every available item as well as their respective item IDs, names, prices, and quantities.
     * View Low Inventory
+        * The app will list all items with an inventory count lower than five.
     * Add to Inventory
+         * The app will display a prompt that will let them "add more" of any item currently in the store.
     * Add New Product
-* If the manager selects `View Products for Sale`, the app will list every available item as well as their respective item IDs, names, prices, and quantities.
-
-* If the manager selects `View Low Inventory`, then it will list all items with an inventory count lower than five.
-
-* If the manager selects `Add to Inventory`, the app will display a prompt that will let them "add more" of any item currently in the store.
-
-* If the manager selects `Add New Product`, it will allow the them to add a completely new product to the store.
+        * The app will allow the them to add a completely new product to the store.
 
 
 
