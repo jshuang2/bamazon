@@ -62,7 +62,7 @@ function viewProducts() {
             console.log("----------------------------------");
             console.log("Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nDepartment: " + res[i].department_name + "\nPrice: $" + res[i].price + "\nStock quantity: " + res[i].stock_quantity);
         }
-        console.log("\n==================================");
+        console.log("\n==================================\n");
         whatNext();
     })
 };
@@ -76,7 +76,7 @@ function viewLowInventory() {
             console.log("----------------------------------");
             console.log("Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nDepartment: " + res[i].department_name + "\nPrice: $" + res[i].price + "\nStock quantity: " + res[i].stock_quantity);
         }
-        console.log("\n==================================");
+        console.log("\n==================================\n");
         whatNext();
     })
 };
@@ -129,7 +129,7 @@ function addInventory() {
                         if (err) throw err;
                         console.log("------------------------------------------------");
                         console.log("Inventory successfully added! \nThe total available quantity of " + chosenItem + " is now " + newQuantity + " units.");
-                        console.log("------------------------------------------------");
+                        console.log("------------------------------------------------\n");
                         whatNext();
                     })
                 }
@@ -187,7 +187,7 @@ function addProduct () {
                 if (err) throw err;
                 console.log("------------------------------------------------");
                 console.log("New product successfully added! \nThe total available quantity of " + answer.productName + " is " + answer.productQuantity + " unit(s). It costs $" + answer.productPrice + " each.");
-                console.log("------------------------------------------------");
+                console.log("------------------------------------------------\n");
                 whatNext();
             }
         )
