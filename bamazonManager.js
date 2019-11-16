@@ -43,7 +43,7 @@ function menu () {
             case "Add to Inventory":
                 addInventory();
                 break;
-            case "Add Product":
+            case "Add New Product":
                 addProduct();
                 break;
             default:
@@ -63,6 +63,7 @@ function viewProducts() {
             console.log("Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nDepartment: " + res[i].department_name + "\nPrice: $" + res[i].price + "\nStock quantity: " + res[i].stock_quantity);
         }
         console.log("\n==================================");
+        whatNext();
     })
 };
 
@@ -76,6 +77,7 @@ function viewLowInventory() {
             console.log("Item ID: " + res[i].item_id + "\nProduct name: " + res[i].product_name + "\nDepartment: " + res[i].department_name + "\nPrice: $" + res[i].price + "\nStock quantity: " + res[i].stock_quantity);
         }
         console.log("\n==================================");
+        whatNext();
     })
 };
 
@@ -127,7 +129,8 @@ function addInventory() {
                         if (err) throw err;
                         console.log("------------------------------------------------");
                         console.log("Inventory successfully added! \nThe total available quantity of " + chosenItem + " is now " + newQuantity + " units.");
-                        ("------------------------------------------------");
+                        console.log("------------------------------------------------");
+                        whatNext();
                     })
                 }
             }
@@ -135,3 +138,92 @@ function addInventory() {
     
     });
 }
+
+function addProduct () {
+    inquirer
+    .prompt([{
+            name: "productName",
+            type: "input",
+            message: "What's the new product called?"
+        },
+        {
+            name: "departmentName",
+            type: "input",
+            message: "What department does this product belong in?"
+        },
+        {
+            name: "productPrice",
+            type: "input",
+            message: "What do you want to set the price to?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+                }
+        },
+        {
+            name: "productQuantity",
+            type: "input",
+            message: "How many units of this product do we have to sell?",
+            validate: function (value) {
+                if (isNaN(value) === false) {
+                    return true;
+                }
+                return false;
+                }
+        }
+    ])
+    .then(function(answer) {
+        db.query(
+            "INSERT INTO products SET ?",
+            {
+                product_name: answer.productName,
+                department_name: answer.departmentName,
+                price: answer.productPrice,
+                stock_quantity: answer.productQuantity
+            },
+            function(err) {
+                if (err) throw err;
+                console.log("------------------------------------------------");
+                console.log("New product successfully added! \nThe total available quantity of " + answer.productName + " is " + answer.productQuantity + " unit(s). It costs $" + answer.productPrice + " each.");
+                console.log("------------------------------------------------");
+                whatNext();
+            }
+        )
+    })
+}
+
+function whatNext () {
+        inquirer
+        .prompt({
+            name: "whatNext",
+            type: "rawlist",
+            message: "What would you like to do next?",
+            choices: [
+                "View Products for Sale",
+                "View Low Inventory",
+                "Add to Inventory",
+                "Add New Product"
+            ]
+        })
+        .then(function(answer) {
+            switch (answer.whatNext) {
+                case "View Products for Sale":
+                    viewProducts();
+                    break;
+                case "View Low Inventory":
+                    viewLowInventory();
+                    break;
+                case "Add to Inventory":
+                    addInventory();
+                    break;
+                case "Add New Product":
+                    addProduct();
+                    break;
+                default:
+                    console.log("Invalid selection.");
+                    whatNext();
+            }
+        })
+};
