@@ -12,16 +12,16 @@ This app utilizes a locally run MySQL database called **bamazon_db**. Within thi
 ![bamazonCustomer-gif](https://user-images.githubusercontent.com/52802240/69092406-27f78780-0a01-11ea-914d-adfa8c49ab93.gif)
 
 2. **Manager View** - Managers can access the manager interface by typing the command `node bamazonManager.js` into the CLI. Running this application will list a set of menu options:
-    * View Products for Sale
+    * ### View Products for Sale
         * The app will list every available item as well as their respective item IDs, names, prices, and quantities.
         ![bamazonViewProductsGif](https://user-images.githubusercontent.com/52802240/69194689-9f4f1900-0ade-11ea-86b9-154c5b159771.gif)
-    * View Low Inventory
+    * ### View Low Inventory
         * The app will list all items with an inventory count lower than five.<br>
         ![bamazonViewLowInventoryGif](https://user-images.githubusercontent.com/52802240/69195341-3799cd80-0ae0-11ea-9a2e-8f648ea95c71.gif)
-    * Add to Inventory
+    * ### Add to Inventory
          * The app will display a prompt that will let them "add more" of any item currently in the store.
          ![bamazonAddInventoryGif](https://user-images.githubusercontent.com/52802240/69195858-b80cfe00-0ae1-11ea-85e7-75d5d8dd29b4.gif)
-    * Add New Product
+    * ### Add New Product
         * The app will allow the them to add a completely new product to the store.<br>
         ![bamazonAddProductGif](https://user-images.githubusercontent.com/52802240/69196394-37e79800-0ae3-11ea-8a40-c05228a1428a.gif)
 
